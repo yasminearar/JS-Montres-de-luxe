@@ -1,0 +1,21 @@
+@use './variables' as vars;
+
+// Reset de base
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: vars.$font-main;
+  color: vars.$color-text;
+  background-color: vars.$color-light;
+  line-height: 1.6;
+}
+
+.container {
+  max-width: vars.$container-width;
+  margin: 0 auto;
+  padding: 2rem;
+}

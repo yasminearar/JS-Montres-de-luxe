@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Ancizar+Sans:ital,wght@0,100..1000;1,100..1000&display=swap"
+      rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+
+    <title>Montres de Luxe</title>
+    <script type="module" src="/main.js"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        // Calculer la hauteur du header fixe pour le défilement
+        const headerHeight = document.querySelector('header').offsetHeight;
+        
+        // Activer le défilement fluide pour les liens d'ancrage
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+          anchor.addEventListener('click', function(e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('href');
+            const targetElement = document.querySelector(targetId);
+            if (targetElement) {
+              window.scrollTo({
+                top: targetElement.offsetTop - headerHeight - 20, // Soustraire la hauteur du header + un peu d'espace
+                behavior: 'smooth'
+              });
+            }
+          });
+        });
+        
+        // Effet de transition sur le header lors du défilement
+        const header = document.querySelector('header');
+        let lastScrollPosition = 0;
+        
+        window.addEventListener('scroll', () => {
+          const currentScrollPosition = window.pageYOffset;
+          
+          // Ajouter une classe lorsque l'utilisateur défile vers le bas
+          if (currentScrollPosition > 100) {
+            header.classList.add('header-scrolled');
+          } else {
+            header.classList.remove('header-scrolled');
+          }
+          
+          lastScrollPosition = currentScrollPosition;
+        });
+      });
+    </script>
+  </head>
+  <body>
+    
+    <header>
+      <div class="container">
+        <a class="header-brand" href="./index.html">Montres de Luxe</a>
+        <ul>
+          <li>
+            <a href="./index.html" class="header-nav active">
+              <span class="icon-circle"><i class="fas fa-store"></i></span> Accueil
+            </a>
+          </li>
+          <li>
+            <a href="../form/form.html" class="header-nav">
+              <span class="icon-circle"><i class="fas fa-plus"></i></span> Ajouter un produit
+            </a>
+          </li>
+          <li>
+            <a href="../register/register.html" class="header-nav">
+              <span class="icon-circle"><i class="fas fa-user-plus"></i></span> Inscription
+            </a>
+          </li>
+          <li>
+            <a href="../login/login.html" class="header-nav">
+              <span class="icon-circle"><i class="fas fa-user"></i></span> Connexion
+            </a>
+          </li>
+        </ul>
+      </div>
+    </header>
+
+    <div class="header-spacer"></div>
+    
+    <section class="hero">
+      <div class="hero__overlay">
+        <div class="hero__content">
+          <h1>MONTRES DE LUXE POUR FEMMES</h1>
+          <p>Élégance. Raffinement. Intemporalité. Découvrez notre collection haut de gamme.</p>
+          <a href="#products-section" class="hero__btn">Voir nos modèles</a>
+        </div>
+      </div>
+    </section>
+    
+    <div class="container">
+    
+
+      <section class="filters">
+        <label for="brand-filter">Filtrer par marque :</label>
+          <select id="brand-filter">
+            <option value="all">Toutes les marques</option>
+            <option value="ROLEX">Rolex</option>
+            <option value="CARTIER">Cartier</option>
+            <option value="CHANEL">Chanel</option>
+            <option value="OMEGA">Omega</option>
+            <option value="BVLGARI">Bulgari</option>
+            <option value="LONGINES">Longines</option>
+            <option value="JAEGER-LECOULTRE">Jaeger-LeCoultre</option>
+            <option value="PIAGET">Piaget</option>
+            <option value="TISSOT">Tissot</option>
+            <option value="GUCCI">Gucci</option>
+            <option value="HERMÈS">Hermès</option>
+            <option value="DIOR">Dior</option>
+            <option value="PATEK PHILIPPE">Patek Philippe</option>
+            <option value="LOUIS VUITTON">Louis Vuitton</option>
+            <option value="CHOPARD">Chopard</option>
+            <option value="BREGUET">Breguet</option>
+          </select>
+      </section>
+      <div id="products-section" class="content"></div>
+
+      <footer> &copy; 2025 Yasmine Arar | Montres de Luxe | Tous droits réservés </footer>
+
+    </div>
+
+  </body>
+</html>
+
