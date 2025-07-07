@@ -1,0 +1,80 @@
+[
+  {
+    "id": "41",
+    "firstname": "Yasmine",
+    "lastname": "Arar",
+    "email": "yasmine@gmail.com",
+    "password": "js123",
+    "role": "admin"
+  },
+  {
+    "email": "test@test.test",
+    "firstname": "Test",
+    "lastname": "User",
+    "password": "test1234",
+    "role": "user",
+    "id": "0197ace6-c748-775c-8de9-efa01277783e",
+    "createdAt": "2025-06-26T15:41:34.921Z",
+    "updatedAt": "2025-06-26T15:41:34.926Z"
+  },
+  {
+    "firstname": "Demo",
+    "lastname": "Admin",
+    "email": "admin@demo.com",
+    "password": "admin123",
+    "role": "admin",
+    "id": "0197cc10-7a7b-77df-a6c0-85912ad1bc2a",
+    "createdAt": "2025-07-02T16:55:21.468Z",
+    "updatedAt": "2025-07-02T16:55:21.468Z"
+  },
+  {
+    "firstname": "yasmine",
+    "lastname": "arar",
+    "email": "test@gmail.com",
+    "password": "Test12345",
+    "role": "user",
+    "id": "0197e0d6-24ae-73ae-8c14-875ed7034ae2",
+    "createdAt": "2025-07-06T17:43:39.951Z",
+    "updatedAt": "2025-07-06T17:43:39.951Z"
+  },
+  {
+    "firstname": "test",
+    "lastname": "test",
+    "email": "test@demo.com",
+    "password": "Test12345",
+    "role": "user",
+    "id": "0197e128-252f-71bd-97d9-63b42e99d752",
+    "createdAt": "2025-07-06T19:13:14.031Z",
+    "updatedAt": "2025-07-06T19:13:14.031Z"
+  },
+  {
+    "firstname": "yasmine",
+    "lastname": "arar",
+    "email": "user@demo.com",
+    "password": "admin123",
+    "role": "user",
+    "id": "0197e1e5-3ffc-72a6-9452-3a055f20a11f",
+    "createdAt": "2025-07-06T22:39:47.197Z",
+    "updatedAt": "2025-07-06T22:39:47.197Z"
+  },
+  {
+    "firstname": "ania",
+    "lastname": "arar",
+    "email": "ania@test.com",
+    "password": "js123",
+    "role": "user",
+    "id": "0197e1e9-efec-7710-92a9-aa9ecce3610b",
+    "createdAt": "2025-07-06T22:44:54.381Z",
+    "updatedAt": "2025-07-06T22:44:54.381Z"
+  },
+  {
+    "firstname": "inesse ",
+    "lastname": "belaidi",
+    "email": "inesse@demo.com",
+    "password": "inesse123",
+    "role": "admin",
+    "id": "0197e2cd-1d5b-740b-b42b-ce2249e33c5b",
+    "createdAt": "2025-07-07T02:53:02.684Z",
+    "updatedAt": "2025-07-07T02:53:02.684Z"
+  }
+]

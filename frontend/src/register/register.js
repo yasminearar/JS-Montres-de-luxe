@@ -1,32 +1,63 @@
 import "../assets/styles/styles.scss";
 import "./register.scss";
+import { apiService } from "../services/api.js";
 
 const form = document.getElementById('register-form');
 const errorElement = document.getElementById('register-errors');
 let errors = [];
 
-form.addEventListener('submit', (e) => {
+form.addEventListener('submit', async (e) => {
   e.preventDefault();
 
   const formData = new FormData(e.target);
   const user = Object.fromEntries(formData.entries());
   
   if (formIsValid(user)) {
-    console.log('Formulaire soumis :', user);
-    alert("Inscription réussie !");
-    form.reset();
+    try {
+      const submitButton = form.querySelector('button[type="submit"]');
+      submitButton.disabled = true;
+      submitButton.textContent = 'Inscription...';
+      const response = await apiService.createUser(user);
+      
+      if (response.success) {
+        window.location.href = '../login/login.html';
+      } else {
+        errors = [response.error || 'Erreur lors de l\'inscription'];
+        displayErrors();
+      }
+    } catch (error) {
+      console.error('Erreur d\'inscription:', error);
+      errors = [error.message || 'Erreur lors de l\'inscription. Vérifiez que le serveur est démarré.'];
+      displayErrors();
+    } finally {
+      const submitButton = form.querySelector('button[type="submit"]');
+      submitButton.disabled = false;
+      submitButton.textContent = 'S\'inscrire';
+    }
   }
 });
 
-function validateName(name) {
+function displayErrors() {
+  if (errors.length) {
+    let errorHTML = "";
+    errors.forEach((e) => {
+      errorHTML += `<li>${e}</li>`;
+    });
+    errorElement.innerHTML = errorHTML;
+  } else {
+    errorElement.innerHTML = "";
+  }
+}
+
+function validateName(name, fieldName) {
   // Test if name is provided
   if (!name) {
-    return "Le nom est obligatoire !";
+    return `${fieldName} est obligatoire !`;
   }
   
   // Check if name has minimum length
   if (name.length < 2) {
-    return "Le nom doit contenir au moins 2 caractères";
+    return `${fieldName} doit contenir au moins 2 caractères`;
   }
   
   return true;
@@ -58,26 +89,21 @@ function validatePassword(password) {
     return "Le mot de passe doit contenir au moins 8 caractères";
   }
   
-  // Check if password has at least one uppercase letter
-  if (!/[A-Z]/.test(password)) {
-    return "Le mot de passe doit contenir au moins une lettre majuscule";
-  }
-  
-  // Check if password has at least one number
-  if (!/[0-9]/.test(password)) {
-    return "Le mot de passe doit contenir au moins un chiffre";
-  }
-  
   return true;
 }
 
 function formIsValid(user) {
   errors = [];
-  
+
+  const firstnameValidation = validateName(user.firstname, "Le prénom");
+  if (firstnameValidation !== true) {
+    errors.push(firstnameValidation);
+  }
+
   // Validation du nom
-  const nomValidation = validateName(user.nom);
-  if (nomValidation !== true) {
-    errors.push(nomValidation);
+  const lastnameValidation = validateName(user.lastname, "Le nom");
+  if (lastnameValidation !== true) {
+    errors.push(lastnameValidation);
   }
   
   // Validation de l'email
@@ -87,21 +113,12 @@ function formIsValid(user) {
   }
   
   // Validation du mot de passe
-  const passwordValidation = validatePassword(user.motdepasse);
+  const passwordValidation = validatePassword(user.password);
   if (passwordValidation !== true) {
     errors.push(passwordValidation);
   }
   
   // Affichage des erreurs
-  if (errors.length) {
-    let errorHTML = "";
-    errors.forEach((e) => {
-      errorHTML += `<li>${e}</li>`;
-    });
-    errorElement.innerHTML = errorHTML;
-    return false;
-  } else {
-    errorElement.innerHTML = "";
-    return true;
-  }
+  displayErrors();
+  return errors.length === 0;
 }

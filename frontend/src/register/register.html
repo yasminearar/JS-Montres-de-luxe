@@ -14,30 +14,51 @@
     />
     <title>Inscription</title>
     <script type="module" src="./register.js"></script>
+    <script type="module" src="../assets/javaScript/components/menu.js"></script>
   </head>  <body>
     <header>
       <div class="container">
-      <a class="header-brand" href="./index.html">Montres de Luxe</a>
-      <ul>        <li>
-          <a href="../index.html" class="header-nav">
-            <span class="icon-circle"><i class="fas fa-store"></i></span> Accueil
-          </a>
-        </li>
-        <li>
-          <a href="../form/form.html" class="header-nav">
-            <span class="icon-circle"><i class="fas fa-plus"></i></span> Ajouter un produit
-          </a>
-        </li>
-        <li>
-          <a href="./register.html" class="header-nav active">
-            <span class="icon-circle"><i class="fas fa-user-plus"></i></span> Inscription
-          </a>
-        </li>
-        <li>
-          <a href="../login/login.html" class="header-nav">
-            <span class="icon-circle"><i class="fas fa-user"></i></span> Connexion
-          </a>        </li>
-      </ul>
+        <a class="header-brand" href="../index.html">Montres de Luxe</a>
+        
+        <!-- Navigation principale -->
+        <ul class="nav-main">
+          <li>
+            <a href="../index.html" class="header-nav">
+              <span class="icon-circle"><i class="fas fa-store"></i></span> Accueil
+            </a>
+          </li>
+        </ul>
+        <ul class="nav-user">
+          <li>
+            <a href="./register.html" class="header-nav auth-nav active">
+              <span class="icon-circle"><i class="fas fa-user-plus"></i></span> Inscription
+            </a>
+          </li>
+          <li>
+            <a href="../login/login.html" class="header-nav auth-nav">
+              <span class="icon-circle"><i class="fas fa-user"></i></span> Connexion
+            </a>
+          </li>
+        </ul>
+        <div class="user-menu" id="user-menu" style="display: none;">
+          <div class="user-info" onclick="toggleUserMenu()">
+            <div class="user-avatar" id="user-avatar"></div>
+            <span id="user-name"></span>
+            <i class="fas fa-chevron-down"></i>
+          </div>
+          <div class="user-dropdown" id="user-dropdown">
+            <a href="#" class="dropdown-item" id="user-profile">
+              <i class="fas fa-user"></i> Mon profil
+            </a>
+            <a href="#" class="dropdown-item" id="user-orders">
+              <i class="fas fa-shopping-bag"></i> Mes commandes
+            </a>
+            <div class="dropdown-divider"></div>
+            <a href="#" class="dropdown-item danger" onclick="logout()">
+              <i class="fas fa-sign-out-alt"></i> Déconnexion
+            </a>
+          </div>
+        </div>
       </div>
     </header>
     
@@ -49,14 +70,17 @@
             <h1>Créer un compte</h1>
             <hr />
             <form id="register-form" class="register-form">
-              <label for="nom">Nom</label>
-              <input type="text" id="nom" name="nom" />
+              <label for="firstname">Prénom</label>
+              <input type="text" id="firstname" name="firstname" />
+
+              <label for="lastname">Nom</label>
+              <input type="text" id="lastname" name="lastname" />
 
               <label for="email">Adresse e-mail</label>
-              <input type="text" id="email" name="email" />
+              <input type="email" id="email" name="email" />
 
-              <label for="motdepasse">Mot de passe</label>
-              <input type="password" id="motdepasse" name="motdepasse" />
+              <label for="password">Mot de passe</label>
+              <input type="password" id="password" name="password" />
               
               <ul class="text-error" id="register-errors"></ul>
 

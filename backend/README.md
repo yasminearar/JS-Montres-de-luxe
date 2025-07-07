@@ -1,6 +1,6 @@
 # Backend API - Montres de Luxe
 
-##  Description
+## Description
 
 API REST pour la gestion d'une boutique de montres de luxe. Backend développé avec Express.js et base de données JSON.
 
@@ -21,11 +21,12 @@ Le serveur démarre sur `http://localhost:5253`
 ### **Routes générales**
 
 - `GET /` - Page d'accueil de l'API
-F
+  F
+
 ### **Routes Produits** (`/products`)
 
 | Méthode  | Endpoint                  | Description                   |
-| -------- | ------------------------- | ----------------------------- |
+| -------- | ------------------------- | ----------------------------- | -------- |
 | `POST`   | `/products`               | Créer une nouvelle montre     |
 | `GET`    | `/products`               | Lister toutes les montres     |
 | `GET`    | `/products/available`     | Montres disponibles en stock  |
@@ -34,43 +35,43 @@ F
 | `GET`    | `/products/search/:query` | Rechercher des montres        |
 | `GET`    | `/products/brand/:marque` | Montres par marque            |
 | `GET`    | `/products/:id`           | Obtenir une montre spécifique |
-| `PUT`    | `/products/:id`           | Mettre à jour une montre      |
-| `PATCH`  | `/products/:id/stock`     | Gérer le stock                |
-| `DELETE` | `/products/:id`           | Supprimer une montre          |
+| `PUT`    | `/products/:id`           | Mettre à jour une montre      | 🔒 Admin |
+| `PATCH`  | `/products/:id/stock`     | Gérer le stock                | 🔒 Admin |
+| `DELETE` | `/products/:id`           | Supprimer une montre          | 🔒 Admin |
 
+### **Routes Utilisateurs** (`/users`)
 
-## Structure du projet
+| Méthode  | Endpoint             | Description                        | Auth     |
+| -------- | -------------------- | ---------------------------------- | -------- |
+| `GET`    | `/users`             | Lister tous les utilisateurs       |          |
+| `GET`    | `/users/:id`         | Obtenir un utilisateur spécifique  |          |
+| `POST`   | `/users`             | Créer un nouvel utilisateur        |          |
+| `PUT`    | `/users/:id`         | Mettre à jour un utilisateur       |          |
+| `GET`    | `/users/admin/list`  | Lister tous les administrateurs    | 🔒 Admin |
+| `DELETE` | `/users/:id`         | Supprimer un utilisateur           | 🔒 Admin |
+| `PATCH`  | `/users/:id/promote` | Promouvoir un utilisateur en admin | 🔒 Admin |
+
+### **Authentification**
+
+Pour accéder aux routes protégées (🔒 Admin), ajouter le header :
 
 ```
-backend/
-├── controllers/
-│   └── watch.controllers.js
-├── database/
-│   ├── models/
-│   │   └── Watch.js
-│   └── JSONArrayDatabase.js
-├── data/
-│   └── watches.json
-├── routes/
-│   ├── index.js
-│   └── products.routes.js
-├── public/
-│   └── assets/
-├── package.json
-└── server.js
+x-user-id: [ID_UTILISATEUR_ADMIN]
 ```
 
 ## Fonctionnalités
 
--  CRUD complet pour les montres
--  Gestion des stocks avec validation
--  Recherche textuelle multi-champs
--  Filtrage par marque et disponibilité
--  Statistiques et analytics
--  Validation des données
--  Gestion d'erreurs structurée
--  Base de données JSON persistante
--  API responses standardisées
+- CRUD complet pour les montres
+- CRUD complet pour les utilisateurs
+- **Système de rôles utilisateur (user/admin)**
+- **Protection des routes par authentification admin**
+- Gestion des stocks avec validation
+- Filtrage par marque et disponibilité
+- Validation des emails utilisateurs
+- Validation des données
+- Gestion d'erreurs structurée
+- Base de données JSON persistante
+- API responses standardisées
 
 ## Format des réponses
 

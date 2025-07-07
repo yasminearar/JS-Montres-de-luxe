@@ -12,6 +12,7 @@
 
     <title>Montres de Luxe</title>
     <script type="module" src="/main.js"></script>
+    <script type="module" src="./assets/javaScript/components/menu.js"></script>
     <script>
       document.addEventListener('DOMContentLoaded', () => {
         // Calculer la hauteur du header fixe pour le défilement
@@ -56,28 +57,49 @@
     <header>
       <div class="container">
         <a class="header-brand" href="./index.html">Montres de Luxe</a>
-        <ul>
+        <ul class="nav-main">
           <li>
             <a href="./index.html" class="header-nav active">
               <span class="icon-circle"><i class="fas fa-store"></i></span> Accueil
             </a>
           </li>
           <li>
-            <a href="../form/form.html" class="header-nav">
+            <a href="./form/form.html" class="header-nav admin-nav">
               <span class="icon-circle"><i class="fas fa-plus"></i></span> Ajouter un produit
             </a>
           </li>
+        </ul>
+        <ul class="nav-user">
           <li>
-            <a href="../register/register.html" class="header-nav">
+            <a href="./register/register.html" class="header-nav auth-nav">
               <span class="icon-circle"><i class="fas fa-user-plus"></i></span> Inscription
             </a>
           </li>
           <li>
-            <a href="../login/login.html" class="header-nav">
+            <a href="./login/login.html" class="header-nav auth-nav">
               <span class="icon-circle"><i class="fas fa-user"></i></span> Connexion
             </a>
           </li>
         </ul>
+        <div class="user-menu" id="user-menu" style="display: none;">
+          <div class="user-info" onclick="toggleUserMenu()">
+            <div class="user-avatar" id="user-avatar"></div>
+            <span id="user-name"></span>
+            <i class="fas fa-chevron-down"></i>
+          </div>
+          <div class="user-dropdown" id="user-dropdown">
+            <a href="#" class="dropdown-item" id="user-profile">
+              <i class="fas fa-user"></i> Mon profil
+            </a>
+            <a href="#" class="dropdown-item" id="user-orders">
+              <i class="fas fa-shopping-bag"></i> Mes commandes
+            </a>
+            <div class="dropdown-divider"></div>
+            <a href="#" class="dropdown-item danger" onclick="logout()">
+              <i class="fas fa-sign-out-alt"></i> Déconnexion
+            </a>
+          </div>
+        </div>
       </div>
     </header>
 

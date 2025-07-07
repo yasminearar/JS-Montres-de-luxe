@@ -1,6 +1,7 @@
 // routes/index.js
 import express from "express";
 import productsRoutes from "./products.routes.js";
+import usersRoutes from "./users.routes.js";
 
 const router = express.Router();
 
@@ -21,6 +22,9 @@ router.get("/", (req, res) => {
 
 // Routes des produits (montres)
 router.use("/products", productsRoutes);
+
+// Routes des utilisateurs
+router.use("/users", usersRoutes);
 
 // Middleware pour les routes non trouvées
 router.use("*", (req, res) => {

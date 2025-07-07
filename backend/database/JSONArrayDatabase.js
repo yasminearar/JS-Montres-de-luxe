@@ -82,6 +82,10 @@ export default class JSONArrayDatabase {
     return this.data.find((item) => item[field] === value) || null;
   }
 
+  async findByEmail(email) {
+    return this.data.find((item) => item.email === email) || null;
+  }
+
   async findAll() {
     return [...this.data];
   }

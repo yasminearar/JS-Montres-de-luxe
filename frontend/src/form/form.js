@@ -1,24 +1,163 @@
 import "../assets/styles/styles.scss";
 import "./form.scss";
+import { apiService } from "../services/api.js";
+import { authService } from "../services/auth.js";
+
+function checkAdminAccess() {
+  if (!authService.isLoggedIn()) {
+    window.location.href = '../login/login.html';
+    return false;
+  }
+  
+  if (!authService.isAdmin()) {
+    window.location.href = '../index.html';
+    return false;
+  }
+  
+  return true;
+}
+
+// Fonction pour basculer l'affichage du menu utilisateur
+window.toggleUserMenu = function() {
+  const dropdown = document.getElementById('user-dropdown');
+  dropdown.classList.toggle('active');
+};
+
+function updateUserMenu() {
+  const userMenu = document.getElementById('user-menu');
+  const navUser = document.querySelector('.nav-user');
+  
+  if (authService.isLoggedIn()) {
+    const currentUser = authService.getCurrentUser();
+
+    if (userMenu) {
+      userMenu.style.display = 'block';
+    }
+    if (navUser) {
+      navUser.style.display = 'none';
+    }
+
+    const userNameElement = document.getElementById('user-name');
+    const userAvatarElement = document.getElementById('user-avatar');
+    
+    if (userNameElement && currentUser) {
+      userNameElement.textContent = currentUser.prenom || currentUser.nom || currentUser.firstname || currentUser.lastname || 'Utilisateur';
+    }
+    if (userAvatarElement && currentUser) {
+      const name = currentUser.prenom || currentUser.nom || currentUser.firstname || currentUser.lastname || 'U';
+      userAvatarElement.textContent = name.charAt(0).toUpperCase();
+    }
+
+    if (authService.isAdmin()) {
+      document.body.classList.add('admin-user');
+    } else {
+      document.body.classList.remove('admin-user');
+    }
+  } else {
+    if (userMenu) {
+      userMenu.style.display = 'none';
+    }
+    if (navUser) {
+      navUser.style.display = 'flex';
+    }
+
+    document.body.classList.remove('admin-user');
+  }
+}
+
+window.logout = function() {
+  authService.logout();
+  updateUserMenu();
+  window.location.href = '../index.html';
+};
+
+document.addEventListener('click', function(event) {
+  const userMenu = document.getElementById('user-menu');
+  const dropdown = document.getElementById('user-dropdown');
+  
+  if (userMenu && !userMenu.contains(event.target)) {
+    dropdown.classList.remove('active');
+  }
+});
 
 const form = document.querySelector("#add-product-form");
 const errorElement = document.querySelector("#errors");
 let errors = [];
 
-form.addEventListener("submit", async (event) => {
+function initializeForm() {
+  authService.init();
+  updateUserMenu();
+
+  if (form) {
+    form.addEventListener("submit", handleSubmit);
+  }
+}
+
+async function handleSubmit(event) {
   event.preventDefault();
+  console.log('Formulaire soumis');
 
   const formData = new FormData(form);
   const produit = Object.fromEntries(formData.entries());
+  console.log('Données du produit:', produit);
 
   if (formIsValid(produit)) {
-    const json = JSON.stringify(produit);
-    console.log("Produit prêt à être envoyé :", json);
+    try {
+      const submitButton = form.querySelector('button[type="submit"]');
+      submitButton.disabled = true;
+      submitButton.textContent = 'Ajout en cours...';
 
-    alert("Produit sauvegardé avec succès !");
-    form.reset();
+      const currentUser = authService.getCurrentUser();
+      console.log('Utilisateur actuel:', currentUser);
+
+      produit.prix = parseFloat(produit.prix);
+      console.log('Produit après conversion prix:', produit);
+
+      console.log('Envoi de la requête API...');
+      const response = await apiService.createProduct(produit, currentUser.id);
+      console.log('Réponse API reçue:', response);
+      
+      if (response.success) {
+        console.log('Produit ajouté avec succès');
+        form.reset();
+        window.location.href = '../index.html';
+      } else {
+        console.error('Erreur de l\'API:', response.error);
+        errors = [response.error || 'Erreur lors de l\'ajout du produit'];
+        displayErrors();
+      }
+    } catch (error) {
+      console.error('Erreur lors de l\'ajout du produit:', error);
+      errors = [error.message || 'Erreur lors de l\'ajout. Vérifiez que le serveur est démarré.'];
+      displayErrors();
+    } finally {
+      const submitButton = form.querySelector('button[type="submit"]');
+      submitButton.disabled = false;
+      submitButton.textContent = 'Ajouter le produit';
+    }
+  } else {
+    console.log('Formulaire invalide, erreurs:', errors);
   }
-});
+}
+
+function displayErrors() {
+  const errorElement = document.querySelector("#errors");
+  
+  if (!errorElement) {
+    console.error('Élément #errors non trouvé dans le DOM');
+    return;
+  }
+
+  if (errors.length) {
+    let errorHTML = "";
+    errors.forEach((e) => {
+      errorHTML += `<li>${e}</li>`;
+    });
+    errorElement.innerHTML = errorHTML;
+  } else {
+    errorElement.innerHTML = "";
+  }
+}
 
 function validatePrice(priceString) {
   if (!priceString) {
@@ -76,8 +215,12 @@ function validateImage(imagePath) {
     return "L'image est obligatoire !";
   }
 
-  if (!imagePath.match(/^(https?:\/\/|\.\.?\/|\/).+\.(jpe?g|png|gif|webp|svg)$/i)) {
-    return "Le chemin de l'image semble invalide. Utilisez une URL ou un chemin relatif valide.";
+  const isValidUrl = /^https?:\/\/.+\.(jpe?g|png|gif|webp|svg)$/i.test(imagePath);
+  const isValidRelativePath = /^\.\.?\/.*\.(jpe?g|png|gif|webp|svg)$/i.test(imagePath);
+  const isValidAbsolutePath = /^\/[^\/].*\.(jpe?g|png|gif|webp|svg)$/i.test(imagePath);
+  
+  if (!isValidUrl && !isValidRelativePath && !isValidAbsolutePath) {
+    return "Le chemin de l'image semble invalide. Utilisez une URL complète (https://...) ou un chemin relatif/absolu valide se terminant par .jpg, .jpeg, .png, .gif, .webp ou .svg";
   }
   
   return true;
@@ -97,8 +240,7 @@ function validateDescription(description) {
 
 function formIsValid(produit) {
   errors = [];
-  
-  // Validation du nom
+
   const nomValidation = validateName(produit.nom);
   if (nomValidation !== true) {
     errors.push(nomValidation);
@@ -141,3 +283,17 @@ function formIsValid(produit) {
     return true;
   }
 }
+
+document.addEventListener('DOMContentLoaded', function() {
+  console.log('DOM chargé, vérification des accès...');
+  
+  if (!checkAdminAccess()) {
+    return;
+  }
+  
+  console.log('Accès autorisé, initialisation du formulaire...');
+
+  setTimeout(() => {
+    initializeForm();
+  }, 100);
+});

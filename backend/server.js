@@ -18,7 +18,25 @@ app.use(morgan("short"));
 app.use(cors());
 
 app.use(express.static(path.join(__dirname, "public")));
-app.use(express.json());
+
+// Middleware pour corriger le Content-Type
+app.use((req, res, next) => {
+  if (req.headers['content-type'] && req.headers['content-type'].includes('json')) {
+    req.headers['content-type'] = 'application/json';
+  }
+  // Si le Content-Type est text/plain mais que le body semble être du JSON (pour POST et PUT)
+  if (req.headers['content-type'] === 'text/plain;charset=UTF-8' && (req.method === 'POST' || req.method === 'PUT')) {
+    req.headers['content-type'] = 'application/json';
+  }
+  next();
+});
+
+// Configuration plus permissive pour express.json()
+app.use(express.json({
+  type: ['application/json', 'application/json;', 'application/json; charset=utf-8', 'text/plain'],
+  limit: '10mb'
+}));
+
 app.use(express.urlencoded({ extended: true }));
 
 app.use(router);

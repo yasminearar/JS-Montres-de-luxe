@@ -27,29 +27,16 @@
   },
   {
     "_type": "Watch",
-    "id": "01949c7a-2c1a-7c8e-8a0a-1234567890ad",
-    "nom": "Première",
-    "marque": "CHANEL",
-    "prix": 5300,
-    "image": "/assets/images/Chanel.png",
-    "description": "Chanel Première, design épuré et chic en acier.",
-    "stock": 2,
-    "estDisponible": true,
-    "createdAt": "2025-06-27T10:02:00.000Z",
-    "updatedAt": "2025-06-27T10:02:00.000Z"
-  },
-  {
-    "_type": "Watch",
     "id": "01949c7a-2c1a-7c8e-8a0a-1234567890ae",
     "nom": "De Ville Trésor",
     "marque": "OMEGA",
-    "prix": 4850,
+    "prix": 4857,
     "image": "/assets/images/omega.png",
     "description": "Omega De Ville Trésor, montre automatique avec cadran nacré.",
     "stock": 4,
     "estDisponible": true,
     "createdAt": "2025-06-27T10:03:00.000Z",
-    "updatedAt": "2025-06-27T10:03:00.000Z"
+    "updatedAt": "2025-07-06T19:12:29.617Z"
   },
   {
     "_type": "Watch",
@@ -170,19 +157,6 @@
   },
   {
     "_type": "Watch",
-    "id": "01949c7a-2c1a-7c8e-8a0a-1234567890ap",
-    "nom": "Happy Sport",
-    "marque": "CHOPARD",
-    "prix": 8900,
-    "image": "/assets/images/ChopardHappySport.png",
-    "description": "Chopard Happy Sport, montres joaillières avec diamants mobiles.",
-    "stock": 3,
-    "estDisponible": true,
-    "createdAt": "2025-06-27T10:14:00.000Z",
-    "updatedAt": "2025-06-27T10:14:00.000Z"
-  },
-  {
-    "_type": "Watch",
     "id": "01949c7a-2c1a-7c8e-8a0a-1234567890aq",
     "nom": "Reine de Naples 8918",
     "marque": "BREGUET",
@@ -195,16 +169,29 @@
     "updatedAt": "2025-06-27T10:15:00.000Z"
   },
   {
-    "nom": "Submariner Date",
+    "nom": "Rolex Lady-Datejust",
     "marque": "ROLEX",
     "prix": 15500,
-    "image": "/assets/images/rolex-submariner.png",
+    "image": "/assets/images/Rolex Lady-Datejust.png",
     "description": "Montre de plong�e professionnelle Rolex",
     "stock": 3,
     "estDisponible": true,
     "_type": "Watch",
     "id": "0197b403-de6f-75ee-8dd1-4193579b9c3c",
     "createdAt": "2025-06-28T00:50:41.904Z",
-    "updatedAt": "2025-06-28T00:50:41.904Z"
+    "updatedAt": "2025-07-06T22:18:50.793Z"
+  },
+  {
+    "nom": "De Ville Trésor test",
+    "marque": "ROLEX",
+    "prix": 12005,
+    "image": "/assets/images/Rolex Lady-Datejust.png",
+    "description": "rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr",
+    "stock": 0,
+    "estDisponible": false,
+    "_type": "Watch",
+    "id": "0197e280-56d9-709c-9111-bb3d6ad07437",
+    "createdAt": "2025-07-07T01:29:11.129Z",
+    "updatedAt": "2025-07-07T02:31:23.914Z"
   }
 ]

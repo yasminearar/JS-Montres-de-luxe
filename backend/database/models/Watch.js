@@ -86,7 +86,9 @@ export default class Watch {
       updates.marque = updates.marque.trim().toUpperCase();
     }
 
-    return watchesDB.update(id, updates);
+    const result = await watchesDB.update(id, updates);
+    
+    return result;
   }
 
   /**
