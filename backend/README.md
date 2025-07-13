@@ -53,11 +53,39 @@ Le serveur démarre sur `http://localhost:5253`
 
 ### **Authentification**
 
-Pour accéder aux routes protégées (🔒 Admin), ajouter le header :
+Pour accéder aux routes protégées (🔒 Admin), inclure le token JWT dans le header :
 
 ```
-x-user-id: [ID_UTILISATEUR_ADMIN]
+Authorization: Bearer [TOKEN_JWT]
 ```
+
+Pour obtenir un token, connectez-vous via `/auth/login` avec votre email et mot de passe.
+
+#### **Comptes de démonstration**
+
+Utilisez ces comptes pour tester l'application :
+
+**Compte administrateur :**
+
+```json
+{
+  "email": "admin@test.com",
+  "password": "12345678",
+  "role": "admin"
+}
+```
+
+**Compte utilisateur standard :**
+
+```json
+{
+  "email": "user@test.com",
+  "password": "12345678",
+  "role": "user"
+}
+```
+
+> **Note de sécurité :** Tous les mots de passe sont chiffrés (hashés avec bcrypt) avant d'être stockés dans la base de données.
 
 ## Fonctionnalités
 

@@ -2,6 +2,7 @@
 import express from "express";
 import productsRoutes from "./products.routes.js";
 import usersRoutes from "./users.routes.js";
+import authRoutes from "./auth.routes.js";
 
 const router = express.Router();
 
@@ -25,6 +26,11 @@ router.use("/products", productsRoutes);
 
 // Routes des utilisateurs
 router.use("/users", usersRoutes);
+
+// Routes d'authentification
+router.use("/auth", authRoutes);
+router.use("/auth", authRoutes);
+router.use("/auth", authRoutes);
 
 // Middleware pour les routes non trouvées
 router.use("*", (req, res) => {

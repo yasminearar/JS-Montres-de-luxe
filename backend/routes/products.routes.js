@@ -15,10 +15,10 @@ import {
   statistiquesMontres
 } from "../controllers/watch.controllers.js";
 
-import { requireAdmin, getUser } from "../middleware/auth.js";
+import { protect, restrictTo, requireAdmin, getUser } from "../middleware/auth.js";
 
 // POST /products - Créer une montre (ADMIN REQUIS)
-router.post("/", requireAdmin, creerMontre);
+router.post("/", protect, restrictTo('admin'), creerMontre);
 
 // GET /products - Lister toutes les montres
 router.get("/", listerToutesLesMontres);
@@ -39,13 +39,13 @@ router.get("/search/:query", rechercherMontres);
 router.get("/brand/:marque", montresParMarque);
 
 // PUT /products/:id - Mettre à jour une montre (ADMIN REQUIS)
-router.put("/:id", requireAdmin, mettreAJourUneMontre);
+router.put("/:id", protect, restrictTo('admin'), mettreAJourUneMontre);
 
 // PATCH /products/:id/stock - Mettre à jour le stock (ADMIN REQUIS)
-router.patch("/:id/stock", requireAdmin, mettreAJourLeStock);
+router.patch("/:id/stock", protect, restrictTo('admin'), mettreAJourLeStock);
 
 // DELETE /products/:id - Supprimer une montre (ADMIN REQUIS)
-router.delete("/:id", requireAdmin, supprimerUneMontre);
+router.delete("/:id", protect, restrictTo('admin'), supprimerUneMontre);
 
 // GET /products/:id - Obtenir une montre (APRÈS toutes les routes statiques)
 router.get("/:id", obtenirUneMontre);

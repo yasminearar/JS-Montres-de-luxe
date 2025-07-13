@@ -473,8 +473,7 @@ const showEditModal = (product) => {
       submitBtn.disabled = true;
       submitBtn.textContent = 'Sauvegarde...';
 
-      const currentUser = authService.getCurrentUser();
-      const response = await apiService.updateProduct(product.id, updatedProduct, currentUser.id);
+      const response = await apiService.updateProduct(product.id, updatedProduct);
       
       if (response.success) {
         closeModal();
@@ -533,8 +532,7 @@ const deleteProduct = async (productId) => {
   
   if (confirm('Êtes-vous sûr de vouloir supprimer ce produit ?')) {
     try {
-      const currentUser = authService.getCurrentUser();
-      const response = await apiService.deleteProduct(productId, currentUser.id);
+      const response = await apiService.deleteProduct(productId);
       
       if (response.success) {
         await refreshProducts();

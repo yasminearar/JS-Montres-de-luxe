@@ -10,7 +10,7 @@ import {
   connecterUtilisateur,
 } from "../controllers/user.controller.js";
 
-import { requireAdmin } from "../middleware/auth.js";
+import { protect, restrictTo, requireAdmin } from "../middleware/auth.js";
 
 const router = express.Router();
 
@@ -19,11 +19,11 @@ router.get("/", afficherTousLesutilisateurs);
 router.get("/:id", obtenirUnUtilisateur);
 router.post("/", creeUnNouvelUtilisateur);
 router.post("/login", connecterUtilisateur);
-router.put("/:id", mettreAJourUnUtilisateur);
+router.put("/:id", protect, mettreAJourUnUtilisateur);
 
 // Routes admin uniquement
-router.get("/admin/list", requireAdmin, obtenirAdmins);
-router.delete("/:id", requireAdmin, supprimerUnUtilisateur);
-router.patch("/:id/promote", requireAdmin, promouvoirAdmin);
+router.get("/admin/list", protect, restrictTo('admin'), obtenirAdmins);
+router.delete("/:id", protect, restrictTo('admin'), supprimerUnUtilisateur);
+router.patch("/:id/promote", protect, restrictTo('admin'), promouvoirAdmin);
 
 export default router;

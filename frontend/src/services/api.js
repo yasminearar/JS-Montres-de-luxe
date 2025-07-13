@@ -7,18 +7,23 @@ class ApiService {
 
   async fetchApi(url, options = {}) {
     try {
-      const cleanHeaders = {
-        'Content-Type': 'application/json',
-        ...options.headers
-      };
+      const { headers: optionHeaders, ...otherOptions } = options;
+      const cleanHeaders = { 'Content-Type': 'application/json' };
+      if (optionHeaders) {
+        Object.assign(cleanHeaders, optionHeaders);
+      }
 
       if (cleanHeaders['Content-Type'].includes('json')) {
         cleanHeaders['Content-Type'] = 'application/json';
       }
-      
+
+      const token = localStorage.getItem('jwtToken');
+      if (token) {
+        cleanHeaders['Authorization'] = `Bearer ${token}`;
+      }
       const requestOptions = {
-        headers: cleanHeaders,
-        ...options
+        ...otherOptions,
+        headers: cleanHeaders
       };
       
       const response = await fetch(url, requestOptions);
@@ -65,48 +70,36 @@ class ApiService {
     return response.data || [];
   }
 
-  async createProduct(productData, userId) {
-    console.log('API createProduct appelée avec:', { productData, userId });
-    console.log('URL de destination:', env.BACKEND_PRODUCTS_URL);
-    
+  async createProduct(productData) {
     const requestData = {
       method: 'POST',
       body: JSON.stringify(productData),
       headers: {
-        'Content-Type': 'application/json',
-        'x-user-id': userId
+        'Content-Type': 'application/json'
       }
     };
     
-    console.log('Données de la requête:', requestData);
-    
     try {
       const response = await this.fetchApi(env.BACKEND_PRODUCTS_URL, requestData);
-      console.log('Réponse reçue de createProduct:', response);
       return response;
     } catch (error) {
-      console.error('Erreur dans createProduct:', error);
       throw error;
     }
   }
 
-  async updateProduct(id, productData, userId) {
+  async updateProduct(id, productData) {
     return await this.fetchApi(`${env.BACKEND_PRODUCTS_URL}/${id}`, {
       method: 'PUT',
       body: JSON.stringify(productData),
       headers: {
-        'Content-Type': 'application/json',
-        'x-user-id': userId
+        'Content-Type': 'application/json'
       }
     });
   }
 
-  async deleteProduct(id, userId) {
+  async deleteProduct(id) {
     return await this.fetchApi(`${env.BACKEND_PRODUCTS_URL}/${id}`, {
-      method: 'DELETE',
-      headers: {
-        'x-user-id': userId
-      }
+      method: 'DELETE'
     });
   }
 
@@ -136,49 +129,41 @@ class ApiService {
     });
   }
 
-  async deleteUser(id, userId) {
+  async deleteUser(id) {
     return await this.fetchApi(`${env.BACKEND_USERS_URL}/${id}`, {
-      method: 'DELETE',
-      headers: {
-        'x-user-id': userId
-      }
+      method: 'DELETE'
     });
   }
 
-  async getAdmins(userId) {
-    const response = await this.fetchApi(`${env.BACKEND_USERS_URL}/admin/list`, {
-      headers: {
-        'x-user-id': userId
-      }
-    });
+  async getAdmins() {
+    const response = await this.fetchApi(`${env.BACKEND_USERS_URL}/admin/list`);
     return response.data || [];
   }
 
-  async promoteToAdmin(id, userId) {
+  async promoteToAdmin(id) {
     return await this.fetchApi(`${env.BACKEND_USERS_URL}/${id}/promote`, {
-      method: 'PATCH',
-      headers: {
-        'x-user-id': userId
-      }
+      method: 'PATCH'
     });
   }
 
   // === AUTHENTIFICATION ===
 
   async login(email, password) {
-    const response = await this.fetchApi(`${env.BACKEND_USERS_URL}/login`, {
+    const response = await this.fetchApi(`${env.BACKEND_URL}/auth/login`, {
       method: 'POST',
       body: JSON.stringify({ email, password })
     });
 
-    if (response.data) {
-      this.setCurrentUser(response.data);
+    if (response.token) {
+      localStorage.setItem('jwtToken', response.token);
+      this.setCurrentUser(response.user);
     }
     
     return response;
   }
 
   logout() {
+    localStorage.removeItem('jwtToken');
     this.clearCurrentUser();
   }
 

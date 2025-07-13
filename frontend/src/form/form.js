@@ -114,7 +114,7 @@ async function handleSubmit(event) {
       console.log('Produit après conversion prix:', produit);
 
       console.log('Envoi de la requête API...');
-      const response = await apiService.createProduct(produit, currentUser.id);
+      const response = await apiService.createProduct(produit);
       console.log('Réponse API reçue:', response);
       
       if (response.success) {

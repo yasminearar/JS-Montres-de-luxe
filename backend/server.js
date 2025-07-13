@@ -9,6 +9,7 @@ import { fileURLToPath } from "url";
 
 // Modules locaux
 import router from "./routes/index.js";
+import errorHandler from "./middleware/errorHandler.js";
 
 const app = express();
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -40,5 +41,8 @@ app.use(express.json({
 app.use(express.urlencoded({ extended: true }));
 
 app.use(router);
+
+// Middleware de gestion des erreurs - doit être après les routes
+app.use(errorHandler);
 
 app.listen(PORT, () => console.log(`Montres API Server is on http://localhost:${PORT}`));

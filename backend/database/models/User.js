@@ -1,4 +1,5 @@
 import JSONArrayDatabase from "../JSONArrayDatabase.js";
+import bcrypt from "bcryptjs";
 
 const userDB = new JSONArrayDatabase("users.json");
 
@@ -15,6 +16,10 @@ export default class User {
     const existingUser = await userDB.findByEmail(userData.email);
     if (existingUser) {
       throw new Error("Courriel existant !");
+    }
+
+    if (userData.password) {
+      userData.password = await bcrypt.hash(userData.password, 12);
     }
 
     const userToCreate = {
@@ -40,6 +45,11 @@ export default class User {
         throw new Error("Email already in use");
       }
     }
+
+    if (updates.password) {
+      updates.password = await bcrypt.hash(updates.password, 12);
+    }
+    
     return userDB.update(id, updates);
   }
 
@@ -51,5 +61,9 @@ export default class User {
   static async isAdmin(userId) {
     const user = await userDB.findById(userId);
     return user && user.role === 'admin';
+  }
+
+  static async comparePassword(candidatePassword, userPassword) {
+    return await bcrypt.compare(candidatePassword, userPassword);
   }
 }

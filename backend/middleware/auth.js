@@ -1,56 +1,67 @@
 import User from "../database/models/User.js";
+import jwt from "jsonwebtoken";
+import asyncHandler from "./asyncHandler.js";
+import ErrorResponse from "../utils/errorResponse.js";
 
-export const requireAdmin = async (req, res, next) => {
-  try {
-    const userId = req.headers['x-user-id'];
-    
-    if (!userId) {
-      return res.status(401).json({
-        success: false,
-        error: "Authentification requise - Header 'x-user-id' manquant"
-      });
-    }
+export const protect = asyncHandler(async (req, res, next) => {
+  let token;
 
-    const user = await User.findById(userId);
-    
-    if (!user) {
-      return res.status(401).json({
-        success: false,
-        error: "Utilisateur non trouvé"
-      });
-    }
-
-    if (user.role !== 'admin') {
-      return res.status(403).json({
-        success: false,
-        error: "Accès refusé - Privilèges administrateur requis"
-      });
-    }
-
-    req.user = user;
-    next();
-    
-  } catch (error) {
-    res.status(500).json({
-      success: false,
-      error: "Erreur lors de la vérification des privilèges"
-    });
+  if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
+    token = req.headers.authorization.split(' ')[1];
   }
+
+  if (!token) {
+    return next(new ErrorResponse("Authentification requise", 401));
+  }
+
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET || 'montres_secret_key_dev');
+    req.user = await User.findById(decoded.id);
+
+    if (!req.user) {
+      return next(new ErrorResponse("Utilisateur non trouvé", 401));
+    }
+
+    next();
+  } catch (err) {
+    return next(new ErrorResponse("Token invalide ou expiré", 401));
+  }
+});
+
+export const restrictTo = (...roles) => {
+  return (req, res, next) => {
+    if (!roles.includes(req.user.role)) {
+      return next(new ErrorResponse(`Rôle ${req.user.role} non autorisé`, 403));
+    }
+    next();
+  };
 };
 
-export const getUser = async (req, res, next) => {
-  try {
-    const userId = req.headers['x-user-id'];
+export const requireAdmin = asyncHandler(async (req, res, next) => {
+  if (!req.user || req.user.role !== 'admin') {
+    return next(new ErrorResponse("Accès refusé - Privilèges administrateur requis", 403));
+  }
+  next();
+});
+
+export const getUser = asyncHandler(async (req, res, next) => {
+  let token;
+  
+  if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
+    token = req.headers.authorization.split(' ')[1];
     
-    if (userId) {
-      const user = await User.findById(userId);
-      if (user) {
-        req.user = user;
+    if (token) {
+      try {
+        const decoded = jwt.verify(token, process.env.JWT_SECRET || 'montres_secret_key_dev');
+        const user = await User.findById(decoded.id);
+        if (user) {
+          req.user = user;
+        }
+      } catch (error) {
+        // Ignorer les erreurs de token
       }
     }
-    
-    next();
-  } catch (error) {
-    next();
   }
-};
+  
+  next();
+});

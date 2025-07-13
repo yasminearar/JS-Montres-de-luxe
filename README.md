@@ -40,13 +40,17 @@ npm run dev
 
 ### 🔐 Administrateur
 
-- **Email :** `admin@demo.com`
-- **Mot de passe :** `admin123`
+- **Email :** `admin@test.com`
+- **Mot de passe :** `12345678`
+- **Rôle :** `admin`
 
 ### 👤 Utilisateur standard
 
-- **Email :** `test@test.test`
-- **Mot de passe :** `test1234`
+- **Email :** `user@test.com`
+- **Mot de passe :** `12345678`
+- **Rôle :** `user`
+
+> **Note de sécurité :** Tous les mots de passe sont chiffrés (hashés avec bcrypt) avant d'être stockés dans la base de données.
 
 ---
 
