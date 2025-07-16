@@ -82,7 +82,7 @@ class AuthService {
   async logout() {
     if (confirm('Êtes-vous sûr de vouloir vous déconnecter ?')) {
       apiService.logout();
-      window.location.href = '/index.html';
+      window.location.href = '/';
     }
   }
 

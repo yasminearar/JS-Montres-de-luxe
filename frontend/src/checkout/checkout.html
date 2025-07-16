@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Ancizar+Sans:ital,wght@0,100..1000;1,100..1000&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+
+    <title>Finalisation de commande - Montres de Luxe</title>
+    <script type="module" src="./checkout.js"></script>
+    <script type="module" src="../assets/javaScript/components/menu.js"></script>
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <a class="header-brand" href="../index.html">Montres de Luxe</a>
+        <ul class="nav-main">
+          <li>
+            <a href="../index.html" class="header-nav">
+              <span class="icon-circle"><i class="fas fa-store"></i></span> Accueil
+            </a>
+          </li>
+          <li>
+            <a href="../form/form.html" class="header-nav admin-nav">
+              <span class="icon-circle"><i class="fas fa-plus"></i></span> Ajouter un produit
+            </a>
+          </li>
+        </ul>
+        
+        <!-- Navigation utilisateur -->
+        <ul class="nav-user">
+          <li>
+            <a href="../register/register.html" class="header-nav auth-nav">
+              <span class="icon-circle"><i class="fas fa-user-plus"></i></span> Inscription
+            </a>
+          </li>
+          <li>
+            <a href="../login/login.html" class="header-nav auth-nav">
+              <span class="icon-circle"><i class="fas fa-user"></i></span> Connexion
+            </a>
+          </li>
+          <li>
+            <a href="../cart/cart.html" class="header-nav cart-nav">
+              <span class="icon-circle">
+                <i class="fas fa-shopping-cart"></i>
+                <span class="cart-count">0</span>
+              </span>
+              Panier
+            </a>
+          </li>
+        </ul>
+        
+        <!-- Menu utilisateur connecté -->
+        <div class="user-menu"></div>
+        
+        <button class="menu-toggle">
+          <span class="bar"></span>
+          <span class="bar"></span>
+          <span class="bar"></span>
+        </button>
+      </div>
+    </header>
+    
+    <main>
+      <div class="container">
+        <section class="checkout-section">
+          <h1 class="section-title">Finalisation de la commande</h1>
+          
+          <div class="checkout-content">
+            <!-- Résumé du panier -->
+            <div class="checkout-summary">
+              <div class="summary-header">
+                <h2>Résumé de votre commande</h2>
+              </div>
+              <div class="summary-content">
+                <!-- Le résumé des articles sera inséré ici par JavaScript -->
+              </div>
+              <div class="summary-totals">
+                <!-- Les totaux seront insérés ici par JavaScript -->
+              </div>
+            </div>
+            
+            <!-- Formulaire d'adresse de livraison -->
+            <div class="checkout-form">
+              <h2>Informations de livraison</h2>
+              
+              <!-- Message pour les utilisateurs non connectés -->
+              <div class="guest-checkout-info">
+                <p>Vous n'avez pas besoin de créer un compte pour finaliser votre commande.</p>
+                <p>Déjà client ? <a href="../login/login.html?redirect=checkout">Connectez-vous ici</a> pour un checkout plus rapide.</p>
+              </div>
+              
+              <form id="shipping-form">
+                <div class="form-group">
+                  <label for="fullName">Nom complet</label>
+                  <input type="text" id="fullName" name="fullName" required>
+                </div>
+                
+                <div class="form-group">
+                  <label for="email">Email</label>
+                  <input type="email" id="email" name="email" required>
+                </div>
+                
+                <div class="form-group">
+                  <label for="phone">Téléphone</label>
+                  <input type="tel" id="phone" name="phone" required>
+                </div>
+                
+                <div class="form-group">
+                  <label for="address">Adresse</label>
+                  <input type="text" id="address" name="address" required>
+                </div>
+                
+                <div class="form-row">
+                  <div class="form-group">
+                    <label for="city">Ville</label>
+                    <input type="text" id="city" name="city" required>
+                  </div>
+                  
+                  <div class="form-group">
+                    <label for="postalCode">Code postal</label>
+                    <input type="text" id="postalCode" name="postalCode" required>
+                  </div>
+                </div>
+                
+                <div class="form-group">
+                  <label for="country">Pays</label>
+                  <select id="country" name="country" required>
+                    <option value="">Sélectionner un pays</option>
+                    <option value="CA">Canada</option>
+                    <option value="FR">France</option>
+                    <option value="BE">Belgique</option>
+                    <option value="CH">Suisse</option>
+                    <option value="US">États-Unis</option>
+                  </select>
+                </div>
+                
+                <div class="form-group shipping-method">
+                  <h3>Mode de livraison</h3>
+                  <div class="radio-group">
+                    <label class="radio-label">
+                      <input type="radio" name="shippingMethod" value="standard" checked>
+                      <div class="radio-content">
+                        <div class="radio-info">
+                          <strong>Standard (5-7 jours ouvrables)</strong>
+                          <span id="standard-price">Calcul en cours...</span>
+                        </div>
+                      </div>
+                    </label>
+                    
+                    <label class="radio-label">
+                      <input type="radio" name="shippingMethod" value="express">
+                      <div class="radio-content">
+                        <div class="radio-info">
+                          <strong>Express (2-3 jours ouvrables)</strong>
+                          <span id="express-price">+15.00 $</span>
+                        </div>
+                      </div>
+                    </label>
+                  </div>
+                </div>
+                
+                <div class="form-actions">
+                  <a href="../cart/cart.html" class="btn-back">
+                    <i class="fas fa-arrow-left"></i> Retour au panier
+                  </a>
+                  <button type="submit" class="btn-confirm-order">
+                    <i class="fas fa-check"></i> Confirmer la commande
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </section>
+      </div>
+      
+      <!-- Modale de confirmation -->
+      <div class="order-confirmation-modal">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h2>Commande confirmée !</h2>
+            <button class="close-modal">&times;</button>
+          </div>
+          <div class="modal-body">
+            <div class="success-icon">
+              <i class="fas fa-check-circle"></i>
+            </div>
+            <p>Votre commande a été confirmée avec succès.</p>
+            <p>Un e-mail de confirmation a été envoyé à <span class="customer-email"></span>.</p>
+            <p>Numéro de commande: <span class="order-number"></span></p>
+            <div class="modal-actions">
+              <a href="../index.html" class="btn-continue-shopping">
+                Continuer vos achats
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+    
+    <footer>
+      <div class="container">
+        <p>&copy; 2025 Montres de Luxe. Tous droits réservés.</p>
+      </div>
+    </footer>
+  </body>
+</html>

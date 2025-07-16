@@ -3,6 +3,7 @@ import express from "express";
 import productsRoutes from "./products.routes.js";
 import usersRoutes from "./users.routes.js";
 import authRoutes from "./auth.routes.js";
+import ordersRoutes from "./orders.routes.js";
 
 const router = express.Router();
 
@@ -29,8 +30,9 @@ router.use("/users", usersRoutes);
 
 // Routes d'authentification
 router.use("/auth", authRoutes);
-router.use("/auth", authRoutes);
-router.use("/auth", authRoutes);
+
+// Routes des commandes
+router.use("/orders", ordersRoutes);
 
 // Middleware pour les routes non trouvées
 router.use("*", (req, res) => {

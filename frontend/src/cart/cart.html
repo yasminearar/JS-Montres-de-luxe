@@ -8,17 +8,20 @@
       href="https://fonts.googleapis.com/css2?family=Ancizar+Sans:ital,wght@0,100..1000;1,100..1000&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-    <title>Ajouter un produit</title>
-    <script type="module" src="./form.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+
+    <title>Panier - Montres de Luxe</title>
+    <script type="module" src="./cart.js"></script>
     <script type="module" src="../assets/javaScript/components/menu.js"></script>
+    <script type="module" src="../assets/javaScript/components/cartIndicator.js"></script>
   </head>
   <body>
     <header>
       <div class="container">
         <a class="header-brand" href="../index.html">Montres de Luxe</a>
-        
-        <!-- Navigation principale -->
         <ul class="nav-main">
           <li>
             <a href="../index.html" class="header-nav">
@@ -26,12 +29,13 @@
             </a>
           </li>
           <li>
-            <a href="./form.html" class="header-nav admin-nav active">
+            <a href="../form/form.html" class="header-nav admin-nav">
               <span class="icon-circle"><i class="fas fa-plus"></i></span> Ajouter un produit
             </a>
           </li>
         </ul>
-
+        
+        <!-- Navigation utilisateur -->
         <ul class="nav-user">
           <li>
             <a href="../register/register.html" class="header-nav auth-nav">
@@ -43,8 +47,18 @@
               <span class="icon-circle"><i class="fas fa-user"></i></span> Connexion
             </a>
           </li>
+          <li>
+            <a href="./cart.html" class="header-nav cart-nav">
+              <span class="icon-circle">
+                <i class="fas fa-shopping-cart"></i>
+                <span class="cart-count">0</span>
+              </span>
+              Panier
+            </a>
+          </li>
         </ul>
-
+        
+        <!-- Menu utilisateur connecté -->
         <div class="user-menu" id="user-menu" style="display: none;">
           <div class="user-info" onclick="toggleUserMenu()">
             <div class="user-avatar" id="user-avatar"></div>
@@ -55,62 +69,47 @@
             <a href="../orders/orders.html" class="dropdown-item">
               <i class="fas fa-box"></i> Mes commandes
             </a>
-            <a href="../cart/cart.html" class="dropdown-item">
+            <a href="./cart.html" class="dropdown-item">
               <i class="fas fa-shopping-cart"></i> Mon panier
               <span class="cart-count-dropdown">0</span>
-            </a>
-            <a href="../form/form.html" class="dropdown-item">
-              <i class="fas fa-plus"></i> Ajouter un produit
             </a>
             <div class="dropdown-divider"></div>
             <a href="#" class="dropdown-item danger" onclick="logout(); return false;">
               <i class="fas fa-sign-out-alt"></i> Déconnexion
             </a>
+            </ul>
           </div>
         </div>
+        
+        <button class="menu-toggle">
+          <span class="bar"></span>
+          <span class="bar"></span>
+          <span class="bar"></span>
+        </button>
       </div>
     </header>
-
-    <div class="header-spacer"></div>
-
-    <div class="container">
-      <div class="content">
-        <h1>Ajouter un produit</h1>
-        <hr />
-        <form id="add-product-form">
-          <div class="form-group">
-            <label for="nom">Nom</label>
-            <input type="text" name="nom" id="nom" />
+    
+    <main>
+      <div class="container">
+        <section class="cart-section">
+          <h1 class="section-title">Mon Panier</h1>
+          
+          <div id="cart-container">
+            <!-- Le contenu du panier sera inséré ici par JavaScript -->
+            <div class="loading">Chargement du panier...</div>
           </div>
           
-          <div class="form-group">
-            <label for="marque">Marque</label>
-            <input type="text" name="marque" id="marque" />
+          <div class="cart-summary">
+            <!-- Le résumé du panier sera inséré ici par JavaScript -->
           </div>
-
-          <div class="form-group">
-            <label for="prix">Prix</label>
-            <input type="text" name="prix" id="prix" />
-          </div>
-
-          <div class="form-group">
-            <label for="image">Image (chemin)</label>
-            <input type="text" name="image" id="image" />
-          </div>
-
-          <div class="form-group">
-            <label for="description">Description</label>
-            <textarea name="description" id="description" rows="4"></textarea>
-          </div>
-
-          <ul class="text-error" id="errors"></ul>          <div class="form-btn-container">
-            <button type="reset" class="btn btn-secondary">Annuler</button>
-            <button type="submit" class="btn btn-primary">Sauvegarder</button>
-          </div>
-        </form>
+        </section>
       </div>
-
-      <footer> &copy; 2025 Yasmine Arar | Montres de Luxe | Tous droits réservés </footer>
-    </div>
+    </main>
+    
+    <footer>
+      <div class="container">
+        <p>&copy; 2025 Montres de Luxe. Tous droits réservés.</p>
+      </div>
+    </footer>
   </body>
 </html>

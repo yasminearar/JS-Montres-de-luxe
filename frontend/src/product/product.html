@@ -16,6 +16,7 @@
     <title>Détail produit</title>
     <script type="module" src="./product.js"></script>
     <script type="module" src="../assets/javaScript/components/menu.js"></script>
+    <script type="module" src="../assets/javaScript/components/cartIndicator.js"></script>
   </head>  <body>
     <header>
       <div class="container">
@@ -45,6 +46,15 @@
               <span class="icon-circle"><i class="fas fa-user"></i></span> Connexion
             </a>
           </li>
+          <li>
+            <a href="../cart/cart.html" class="header-nav cart-nav">
+              <span class="icon-circle">
+                <i class="fas fa-shopping-cart"></i>
+                <span class="cart-count">0</span>
+              </span>
+              Panier
+            </a>
+          </li>
         </ul>
         
         <!-- Menu utilisateur connecté -->
@@ -54,10 +64,18 @@
             <div class="user-name" id="user-name">Utilisateur</div>
           </div>
           <div class="user-dropdown" id="user-dropdown">
-            <a href="../form/form.html" class="admin-nav">
+            <a href="../orders/orders.html" class="dropdown-item">
+              <i class="fas fa-box"></i> Mes commandes
+            </a>
+            <a href="../cart/cart.html" class="dropdown-item">
+              <i class="fas fa-shopping-cart"></i> Mon panier
+              <span class="cart-count-dropdown">0</span>
+            </a>
+            <a href="../form/form.html" class="dropdown-item admin-nav">
               <i class="fas fa-plus"></i> Ajouter un produit
             </a>
-            <a href="javascript:void(0)" onclick="logout()">
+            <div class="dropdown-divider"></div>
+            <a href="#" class="dropdown-item danger" onclick="logout(); return false;">
               <i class="fas fa-sign-out-alt"></i> Déconnexion
             </a>
           </div>

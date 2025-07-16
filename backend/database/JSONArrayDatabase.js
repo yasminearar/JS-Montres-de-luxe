@@ -50,6 +50,10 @@ export default class JSONArrayDatabase {
     return newItem;
   }
 
+  async create(item) {
+    return this.insert(item);
+  }
+
   async update(id, updates) {
     const index = this.data.findIndex((item) => item.id == id);
     if (index !== -1) {
@@ -78,6 +82,10 @@ export default class JSONArrayDatabase {
     return this.data.find((item) => item.id == id) || null;
   }
 
+  async getById(id) {
+    return this.findById(id);
+  }
+
   async findByField(field, value) {
     return this.data.find((item) => item[field] === value) || null;
   }
@@ -88,6 +96,10 @@ export default class JSONArrayDatabase {
 
   async findAll() {
     return [...this.data];
+  }
+
+  async getAll() {
+    return this.findAll();
   }
 
   async search(field, searchTerm) {

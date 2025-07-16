@@ -25,7 +25,7 @@ class ApiService {
         ...otherOptions,
         headers: cleanHeaders
       };
-      
+
       const response = await fetch(url, requestOptions);
 
       if (!response.ok) {
@@ -144,6 +144,32 @@ class ApiService {
     return await this.fetchApi(`${env.BACKEND_USERS_URL}/${id}/promote`, {
       method: 'PATCH'
     });
+  }
+
+  // === COMMANDES ===
+
+  async get(url, options = {}) {
+    return this.fetchApi(url, { method: 'GET', ...options });
+  }
+
+  async post(url, data, options = {}) {
+    return this.fetchApi(url, { 
+      method: 'POST',
+      body: JSON.stringify(data),
+      ...options
+    });
+  }
+
+  async put(url, data, options = {}) {
+    return this.fetchApi(url, { 
+      method: 'PUT',
+      body: JSON.stringify(data),
+      ...options
+    });
+  }
+
+  async delete(url, options = {}) {
+    return this.fetchApi(url, { method: 'DELETE', ...options });
   }
 
   // === AUTHENTIFICATION ===

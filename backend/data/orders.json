@@ -1,0 +1,54 @@
+[
+  {
+    "customer": {
+      "fullName": "ania user",
+      "email": "user@test.com",
+      "phone": "5142457878",
+      "address": "6455 Boulevard Lavoisier",
+      "city": "Montréal",
+      "postalCode": "H1P3L4",
+      "country": "CA"
+    },
+    "shipping": {
+      "method": "express"
+    },
+    "items": [
+      {
+        "id": "01949c7a-2c1a-7c8e-8a0a-1234567890ae",
+        "nom": "De Ville Trésor",
+        "marque": "OMEGA",
+        "prix": 4857,
+        "image": "/assets/images/omega.png",
+        "quantity": 1
+      },
+      {
+        "id": "01949c7a-2c1a-7c8e-8a0a-1234567890ac",
+        "nom": "Ballon Bleu",
+        "marque": "CARTIER",
+        "prix": 6700,
+        "image": "/assets/images/balon-bleu-cartier.png",
+        "quantity": 1
+      },
+      {
+        "id": "01949c7a-2c1a-7c8e-8a0a-1234567890ab",
+        "nom": "Lady-Datejust",
+        "marque": "ROLEX",
+        "prix": 8501,
+        "image": "/assets/images/Rolex Lady-Datejust.png",
+        "quantity": 1
+      }
+    ],
+    "totals": {
+      "subtotal": 20058,
+      "shipping": 15,
+      "total": 20073
+    },
+    "orderDate": "2025-07-16T02:46:03.195Z",
+    "userStatus": "guest",
+    "userId": "0197e1e9-efec-7710-92a9-aa9ecce3610b",
+    "createdAt": "2025-07-16T02:46:03.205Z",
+    "orderNumber": "ML-9632046015",
+    "id": "0198111f-f2c4-7699-9507-a163819f0d7a",
+    "updatedAt": "2025-07-16T02:46:03.205Z"
+  }
+]

@@ -1,10 +1,14 @@
 import '../assets/styles/styles.scss';
 import './login.scss';
 import { apiService } from '../services/api.js';
+import { cartService } from '../services/cart.js';
 
 const form = document.querySelector('.login-form');
 const errorElement = document.getElementById('login-errors');
 let errors = [];
+
+const urlParams = new URLSearchParams(window.location.search);
+const redirectPage = urlParams.get('redirect');
 
 form.addEventListener('submit', async (e) => {
   e.preventDefault();
@@ -20,7 +24,17 @@ form.addEventListener('submit', async (e) => {
       const response = await apiService.login(email, password);
       
       if (response.success) {
-        window.location.href = '../index.html';
+        if (response.user && response.user.id) {
+          cartService.handleUserLogin(response.user.id);
+        }
+
+        if (response.user && response.user.role === 'admin') {
+          window.location.href = '../admin/admin-orders.html';
+        } else if (redirectPage === 'checkout') {
+          window.location.href = '../checkout/checkout.html';
+        } else {
+          window.location.href = '../index.html';
+        }
       } else {
         errors = [response.error || 'Erreur de connexion'];
         displayErrors();

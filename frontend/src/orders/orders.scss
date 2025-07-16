@@ -1,0 +1,381 @@
+// Importer les variables et mixins directement
+@use "../assets/styles/partials/variables" as vars;
+@use "../assets/styles/partials/mixins" as mix;
+// Importer le style global
+@import "../assets/styles/styles.scss";
+
+.orders-section {
+  padding: 3rem 0;
+  min-height: 70vh;
+  margin-top: 80px; // Espace pour le header fixe
+  
+  .section-title {
+    margin-bottom: 2rem;
+    font-size: 2.5rem;
+    font-weight: 700;
+    text-align: center;
+    color: vars.$color-text;
+  }
+}
+
+.empty-orders {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 4rem 2rem;
+  background-color: vars.$color-light;
+  border-radius: 10px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+  margin: 2rem auto;
+  max-width: 800px;
+  
+  i {
+    font-size: 4rem;
+    color: vars.$color-muted;
+    margin-bottom: 1.5rem;
+  }
+  
+  h2 {
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+    color: vars.$color-text;
+    font-weight: 600;
+  }
+  
+  p {
+    font-size: 1.1rem;
+    margin-bottom: 2rem;
+    color: vars.$color-muted;
+    max-width: 500px;
+    line-height: 1.5;
+  }
+  
+  .btn-shop-now {
+    @include mix.button-primary;
+    font-size: 1.1rem;
+    padding: 0.8rem 1.5rem;
+    display: flex;
+    align-items: center;
+    
+    i {
+      font-size: 1rem;
+      color: white;
+      margin-right: 0.5rem;
+      margin-bottom: 0;
+    }
+    
+    i {
+      font-size: 1rem;
+      margin-right: 0.5rem;
+      color: inherit;
+      margin-bottom: 0;
+    }
+  }
+}
+
+.loading {
+  text-align: center;
+  padding: 2rem;
+  font-size: 1.1rem;
+  color: #666;
+}
+
+.error-message {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+  
+  i {
+    font-size: 3rem;
+    color: vars.$color-danger;
+    margin-bottom: 1rem;
+  }
+  
+  p {
+    font-size: 1.1rem;
+    color: #666;
+  }
+}
+
+.order-card {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+  margin-bottom: 1.5rem;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  }
+  
+  .order-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: vars.$color-light;
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    
+    .order-info {
+      .order-number {
+        font-size: 1.2rem;
+        font-weight: 600;
+        margin-bottom: 0.2rem;
+        color: vars.$color-text;
+      }
+      
+      .order-date {
+        font-size: 0.9rem;
+        color: vars.$color-muted;
+      }
+    }
+    
+    .order-total {
+      font-weight: 700;
+      color: vars.$color-border;
+      font-size: 1.1rem;
+    }
+  }
+  
+  .order-content {
+    padding: 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    
+    @media (max-width: 768px) {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    
+    .order-items {
+      flex: 1;
+      
+      .order-item-preview {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 0.7rem;
+        padding: 0.5rem;
+        border-radius: 4px;
+        transition: background-color 0.2s ease;
+        
+        &:hover {
+          background-color: vars.$color-light;
+        }
+        
+        .item-name {
+          font-weight: 500;
+          color: vars.$color-text;
+        }
+        
+        .item-quantity {
+          color: vars.$color-muted;
+          font-weight: 500;
+        }
+      }
+      
+      .more-items {
+        font-size: 0.9rem;
+        color: vars.$color-muted;
+        font-style: italic;
+        margin-top: 0.5rem;
+      }
+    }
+    
+    .order-actions {
+      margin-left: 1.5rem;
+      
+      @media (max-width: 768px) {
+        margin-left: 0;
+        margin-top: 1rem;
+        width: 100%;
+      }
+      
+      .btn-view-details {
+        @include mix.button-outline;
+        padding: 0.7rem 1.4rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        
+        i {
+          margin-right: 0.5rem;
+        }
+        
+        @media (max-width: 768px) {
+          width: 100%;
+        }
+      }
+    }
+  }
+}
+
+.loading {
+  text-align: center;
+  padding: 2rem;
+  color: vars.$color-muted;
+  font-size: 1.1rem;
+}
+
+// Style pour le modal de détails
+.order-details-modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 1000;
+  justify-content: center;
+  align-items: center;
+  overflow-y: auto;
+  padding: 2rem 1rem;
+  backdrop-filter: blur(3px);
+  
+  .modal-content {
+    background-color: white;
+    border-radius: 12px;
+    max-width: 800px;
+    width: 100%;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    max-height: 90vh;
+    overflow-y: auto;
+    transform: translateY(0);
+    animation: modalFadeIn 0.3s ease;
+    
+    @keyframes modalFadeIn {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5rem;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+      position: sticky;
+      top: 0;
+      background-color: white;
+      z-index: 10;
+      
+      h2 {
+        font-size: 1.5rem;
+        margin: 0;
+        color: vars.$color-text;
+        font-weight: 600;
+        
+        .detail-order-number {
+          color: vars.$color-border;
+        }
+      }
+      
+      .close-modal {
+        background: none;
+        border: none;
+        font-size: 1.8rem;
+        cursor: pointer;
+        color: vars.$color-muted;
+        line-height: 1;
+        padding: 0.5rem;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s ease;
+        
+        &:hover {
+          color: vars.$color-text;
+          background-color: vars.$color-light;
+        }
+      }
+    }
+    
+    .modal-body {
+      padding: 1.5rem;
+      color: vars.$color-text;
+      
+      .order-detail-info {
+        background-color: #f8f9fa;
+        padding: 1.5rem;
+        border-radius: 8px;
+        margin-bottom: 2rem;
+        
+        .detail-row {
+          display: flex;
+          margin-bottom: 0.8rem;
+          
+          @media (max-width: 768px) {
+            flex-direction: column;
+          }
+          
+          &:last-child {
+            margin-bottom: 0;
+          }
+          
+          .detail-label {
+            font-weight: 600;
+            width: 180px;
+            flex-shrink: 0;
+          }
+          
+          .detail-value {
+            color: #495057;
+          }
+        }
+      }
+      
+      h3 {
+        font-size: 1.3rem;
+        margin-bottom: 1rem;
+      }
+      
+      .order-items-table {
+        overflow-x: auto;
+        
+        table {
+          width: 100%;
+          border-collapse: collapse;
+          
+          th, td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #e9ecef;
+          }
+          
+          th {
+            background-color: #f8f9fa;
+            font-weight: 600;
+          }
+          
+          tbody tr:last-child td {
+            border-bottom: 2px solid #dee2e6;
+          }
+          
+          tfoot {
+            font-weight: 700;
+            
+            .total-label {
+              text-align: right;
+            }
+            
+            .total-value {
+              color: vars.$color-border;
+              font-size: 1.1rem;
+            }
+          }
+        }
+      }
+    }
+  }
+}

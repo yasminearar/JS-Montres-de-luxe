@@ -1,0 +1,123 @@
+@use 'sass:color';
+@use './variables' as vars;
+
+// Mixin pour les boutons primaires
+@mixin button-primary {
+  display: inline-block;
+  background-color: vars.$color-border;
+  color: white;
+  font-weight: 600;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 4px;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  
+  &:hover {
+    background-color: color.scale(vars.$color-border, $lightness: -10%);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  }
+  
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+// Mixin pour les boutons secondaires
+@mixin button-secondary {
+  display: inline-block;
+  background-color: transparent;
+  color: vars.$color-border;
+  font-weight: 600;
+  padding: 0.75rem 1.5rem;
+  border: 1px solid vars.$color-border;
+  border-radius: 4px;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  
+  &:hover {
+    background-color: vars.$color-border;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  }
+  
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+// Mixin pour les boutons d'action
+@mixin button-action {
+  display: inline-block;
+  background-color: vars.$color-accent;
+  color: white;
+  font-weight: 600;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 4px;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  
+  &:hover {
+    background-color: lighten(vars.$color-accent, 10%);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  }
+  
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+// Mixin pour les boutons danger
+@mixin button-danger {
+  display: inline-block;
+  background-color: #dc3545;
+  color: white;
+  font-weight: 600;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 4px;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  
+  &:hover {
+    background-color: darken(#dc3545, 10%);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  }
+  
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+// Mixin pour les boutons outline
+@mixin button-outline {
+  display: inline-block;
+  background-color: transparent;
+  color: vars.$color-text;
+  font-weight: 500;
+  padding: 0.5rem 1rem;
+  border: 1px solid vars.$color-text;
+  border-radius: 4px;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  
+  &:hover {
+    background-color: vars.$color-text;
+    color: white;
+  }
+}

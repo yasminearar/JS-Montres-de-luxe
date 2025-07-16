@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Ancizar+Sans:ital,wght@0,100..1000;1,100..1000&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+
+    <title>Mes Commandes - Montres de Luxe</title>
+    <script type="module" src="./orders.js"></script>
+    <script type="module" src="../assets/javaScript/components/menu.js"></script>
+    <script type="module" src="../assets/javaScript/components/cartIndicator.js"></script>
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <a class="header-brand" href="../index.html">Montres de Luxe</a>
+        <ul class="nav-main">
+          <li>
+            <a href="../index.html" class="header-nav">
+              <span class="icon-circle"><i class="fas fa-store"></i></span> Accueil
+            </a>
+          </li>
+          <li>
+            <a href="../form/form.html" class="header-nav admin-nav">
+              <span class="icon-circle"><i class="fas fa-plus"></i></span> Ajouter un produit
+            </a>
+          </li>
+        </ul>
+        
+        <!-- Navigation utilisateur -->
+        <ul class="nav-user">
+          <li>
+            <a href="../register/register.html" class="header-nav auth-nav">
+              <span class="icon-circle"><i class="fas fa-user-plus"></i></span> Inscription
+            </a>
+          </li>
+          <li>
+            <a href="../login/login.html" class="header-nav auth-nav">
+              <span class="icon-circle"><i class="fas fa-user"></i></span> Connexion
+            </a>
+          </li>
+          <li>
+            <a href="../cart/cart.html" class="header-nav cart-nav">
+              <span class="icon-circle">
+                <i class="fas fa-shopping-cart"></i>
+                <span class="cart-count">0</span>
+              </span>
+              Panier
+            </a>
+          </li>
+        </ul>
+        
+        <!-- Menu utilisateur connecté -->
+        <div class="user-menu" id="user-menu" style="display: none;">
+          <div class="user-info" onclick="toggleUserMenu()">
+            <div class="user-avatar" id="user-avatar"></div>
+            <span id="user-name"></span>
+            <i class="fas fa-chevron-down"></i>
+          </div>
+          <div class="user-dropdown" id="user-dropdown">
+            <a href="./orders.html" class="dropdown-item">
+              <i class="fas fa-box"></i> Mes commandes
+            </a>
+            <a href="../cart/cart.html" class="dropdown-item">
+              <i class="fas fa-shopping-cart"></i> Mon panier
+              <span class="cart-count-dropdown">0</span>
+            </a>
+            <div class="dropdown-divider"></div>
+            <a href="#" class="dropdown-item danger" onclick="logout(); return false;">
+              <i class="fas fa-sign-out-alt"></i> Déconnexion
+            </a>
+            </ul>
+          </div>
+        </div>
+        
+        <button class="menu-toggle">
+          <span class="bar"></span>
+          <span class="bar"></span>
+          <span class="bar"></span>
+        </button>
+      </div>
+    </header>
+    
+    <main>
+      <div class="container">
+        <section class="orders-section">
+          <h1 class="section-title">Mes Commandes</h1>
+          
+          <div class="orders-container">
+            <!-- Le contenu des commandes sera inséré ici par JavaScript -->
+            <div class="loading">Chargement de vos commandes...</div>
+          </div>
+          
+          <!-- Template pour les commandes vides -->
+          <template id="empty-orders-template">
+            <div class="empty-orders">
+              <i class="fas fa-box-open"></i>
+              <h2>Vous n'avez pas encore passé de commande</h2>
+              <p>Explorez notre collection de montres de luxe et passez votre première commande.</p>
+              <a href="../index.html" class="btn-shop-now">
+                <i class="fas fa-store"></i> Découvrir nos produits
+              </a>
+            </div>
+          </template>
+          
+          <!-- Template pour les commandes -->
+          <template id="order-template">
+            <div class="order-card">
+              <div class="order-header">
+                <div class="order-info">
+                  <h3 class="order-number"></h3>
+                  <span class="order-date"></span>
+                </div>
+                <div class="order-total"></div>
+              </div>
+              <div class="order-content">
+                <div class="order-items">
+                  <!-- Les items seront insérés ici -->
+                </div>
+                <div class="order-actions">
+                  <button class="btn-view-details">
+                    <i class="fas fa-eye"></i> Voir les détails
+                  </button>
+                </div>
+              </div>
+            </div>
+          </template>
+          
+          <!-- Modal pour les détails de commande -->
+          <div class="order-details-modal">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h2>Détails de la commande <span class="detail-order-number"></span></h2>
+                <button class="close-modal">&times;</button>
+              </div>
+              <div class="modal-body">
+                <!-- Les détails seront insérés ici -->
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+    
+    <footer>
+      <div class="container">
+        <p>&copy; 2025 Montres de Luxe. Tous droits réservés.</p>
+      </div>
+    </footer>
+  </body>
+</html>

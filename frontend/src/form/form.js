@@ -68,7 +68,7 @@ function updateUserMenu() {
 window.logout = function() {
   authService.logout();
   updateUserMenu();
-  window.location.href = '../index.html';
+  window.location.href = '/';
 };
 
 document.addEventListener('click', function(event) {

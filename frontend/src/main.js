@@ -2,6 +2,8 @@ import "./assets/styles/styles.scss";
 import "./main.scss";
 import { apiService } from "./services/api.js";
 import { authService } from "./services/auth.js";
+import { cartService } from "./services/cart.js";
+import { updateCartIndicator } from "./assets/javaScript/components/cartIndicator.js";
 
 window.toggleUserMenu = function() {
   const dropdown = document.getElementById('user-dropdown');
@@ -54,7 +56,7 @@ function updateUserMenu() {
 window.logout = function() {
   authService.logout();
   updateUserMenu();
-  window.location.reload();
+  window.location.href = '/';
 };
 
 document.addEventListener('click', function(event) {
@@ -214,6 +216,9 @@ const createProductElement = (produit, index) => {
       <h3 class="brand">${produit.marque}</h3>
       <h2 class="title">${produit.nom}</h2>
       <h2 class="price">${produit.prix.toFixed(2)}$</h2>
+      <button class="add-to-cart-btn" data-product-id="${produit.id}">
+        <i class="fas fa-shopping-cart"></i> Ajouter au panier
+      </button>
       ${isAdmin ? `
         <div class="admin-controls">
           <button class="btn-edit" data-product-id="${produit.id}" title="Éditer">
@@ -227,6 +232,16 @@ const createProductElement = (produit, index) => {
     </div>
   `;
 
+  // Ajouter le gestionnaire pour le bouton "Ajouter au panier"
+  const addToCartBtn = a.querySelector('.add-to-cart-btn');
+  if (addToCartBtn) {
+    addToCartBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      addToCart(produit);
+    });
+  }
+  
   if (isAdmin) {
     const editBtn = a.querySelector('.btn-edit');
     const deleteBtn = a.querySelector('.btn-delete');
@@ -544,5 +559,37 @@ const deleteProduct = async (productId) => {
     }
   }
 };
+
+const addToCart = (produit) => {
+  cartService.addToCart(produit, 1);
+
+  updateCartIndicator();
+
+  showToast(`${produit.nom} ajouté au panier`);
+};
+
+
+const showToast = (message, type = 'success') => {
+  let toast = document.querySelector('.toast-notification');
+  
+  if (!toast) {
+    toast = document.createElement('div');
+    toast.className = 'toast-notification';
+    document.body.appendChild(toast);
+  }
+
+  toast.textContent = message;
+  toast.className = `toast-notification ${type}`;
+
+  toast.classList.add('show');
+
+  setTimeout(() => {
+    toast.classList.remove('show');
+  }, 3000);
+};
+
+document.addEventListener('DOMContentLoaded', () => {
+  updateCartIndicator();
+});
 
 initApp();

@@ -13,6 +13,7 @@
     <title>Montres de Luxe</title>
     <script type="module" src="/main.js"></script>
     <script type="module" src="./assets/javaScript/components/menu.js"></script>
+    <script type="module" src="./assets/javaScript/components/cartIndicator.js"></script>
     <script>
       document.addEventListener('DOMContentLoaded', () => {
         // Calculer la hauteur du header fixe pour le défilement
@@ -80,6 +81,15 @@
               <span class="icon-circle"><i class="fas fa-user"></i></span> Connexion
             </a>
           </li>
+          <li>
+            <a href="./cart/cart.html" class="header-nav cart-nav">
+              <span class="icon-circle">
+                <i class="fas fa-shopping-cart"></i>
+                <span class="cart-count">0</span>
+              </span>
+              Panier
+            </a>
+          </li>
         </ul>
         <div class="user-menu" id="user-menu" style="display: none;">
           <div class="user-info" onclick="toggleUserMenu()">
@@ -91,11 +101,15 @@
             <a href="#" class="dropdown-item" id="user-profile">
               <i class="fas fa-user"></i> Mon profil
             </a>
-            <a href="#" class="dropdown-item" id="user-orders">
+            <a href="./orders/orders.html" class="dropdown-item" id="user-orders">
               <i class="fas fa-shopping-bag"></i> Mes commandes
             </a>
+            <a href="./cart/cart.html" class="dropdown-item" id="user-cart">
+              <i class="fas fa-shopping-cart"></i> Mon panier
+              <span class="cart-count-dropdown">0</span>
+            </a>
             <div class="dropdown-divider"></div>
-            <a href="#" class="dropdown-item danger" onclick="logout()">
+            <a href="#" class="dropdown-item danger" onclick="logout(); return false;">
               <i class="fas fa-sign-out-alt"></i> Déconnexion
             </a>
           </div>

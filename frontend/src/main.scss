@@ -240,6 +240,64 @@
   }
 }
 
+// Bouton d'ajout au panier sur les cartes produits
+.add-to-cart-btn {
+  width: 100%;
+  padding: 12px 0;
+  margin-top: 12px;
+  background-color: #333;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  transition: background-color 0.2s;
+  
+  &:hover {
+    background-color: #555;
+  }
+  
+  i {
+    font-size: 1rem;
+  }
+}
+
+// Toast de notification
+.toast-notification {
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%) translateY(100px);
+  background-color: rgba(51, 51, 51, 0.9);
+  color: white;
+  padding: 12px 24px;
+  border-radius: 4px;
+  z-index: 1000;
+  opacity: 0;
+  transition: transform 0.3s, opacity 0.3s;
+  text-align: center;
+  min-width: 250px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  
+  &.show {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+  }
+  
+  &.success {
+    background-color: rgba(46, 125, 50, 0.9);
+  }
+  
+  &.error {
+    background-color: rgba(198, 40, 40, 0.9);
+  }
+}
+
 // Responsive pour les informations utilisateur
 @media (max-width: 768px) {
   .user-info {
